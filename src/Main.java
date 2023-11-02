@@ -12,7 +12,7 @@ public class Main {
             String result = calc(calc.trim());
             System.out.println(result);
         } catch (RuntimeException e) {
-            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
         }
     }
 
@@ -28,7 +28,7 @@ public class Main {
         String[] data = op != null ? input.split("\\Q" + op + "\\E") : null;
 
         if(data == null || data.length != 2){
-            throw new RuntimeException();
+            throw new RuntimeException("Количество операндов не соответствует условию");
         }
 
         if(isNumeric(data[0]) && isNumeric(data[1])){
@@ -51,14 +51,14 @@ public class Main {
         for(char i : resultCharArray){
             String element = Character.toString(i);
             if(!arabic.contains(element)){
-                throw new RuntimeException();
+                throw new RuntimeException("Одновременно используются разные системы счисления");
             }
         }
         int a = romanToInt(firstOperand);
         int b = romanToInt(secondOperand);
         int resultIntFromRoman = calculateInArabic(a,b,op);
         if (resultIntFromRoman <= 0) {
-            throw new RuntimeException();
+            throw new RuntimeException("В римской системе нет отрицательных чисел");
         }
         return(intToRoman(resultIntFromRoman));
     }
@@ -94,7 +94,7 @@ public class Main {
     public static int calculateInArabic(int a, int b, String op){
         try {
             if (a < 1 || a > 10 || b < 1 || b > 10) {
-                throw new RuntimeException("Введенные операнды превышают допустимый диапозон!");
+                throw new RuntimeException("Введенные операнды превышают допустимый диапозон");
             }
         } catch (NumberFormatException ex) {
             throw new RuntimeException();
